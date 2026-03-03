@@ -9,5 +9,5 @@ use App\Domain\Email\EmailAnalysis;
 
 interface NotificationSenderInterface
 {
-    public function sendImportantEmailAlert(Email $email, EmailAnalysis $analysis): void;
+    public function send(Email $email, EmailAnalysis $analysis): void;
 }

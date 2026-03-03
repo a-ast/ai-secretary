@@ -19,7 +19,7 @@ final class TelegramNotificationSender implements NotificationSenderInterface
         private readonly string $chatId,
     ) {}
 
-    public function sendImportantEmailAlert(Email $email, EmailAnalysis $analysis): void
+    public function send(Email $email, EmailAnalysis $analysis): void
     {
         if ('' === $this->botToken) {
             throw new \RuntimeException('TELEGRAM_BOT_TOKEN is not configured.');

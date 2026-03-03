@@ -38,7 +38,7 @@ final class AnalyzeEmailsUseCase
                     ++$result->important;
 
                     try {
-                        $this->notificationSender->sendImportantEmailAlert($email, $analysis);
+                        $this->notificationSender->send($email, $analysis);
                         ++$result->notified;
                     } catch (\Throwable $e) {
                         $result->addError($email->subject, 'Telegram notification failed: '.$e->getMessage());
