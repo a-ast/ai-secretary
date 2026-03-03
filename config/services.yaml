@@ -68,6 +68,24 @@ services:
         arguments:
             $filePath: '%kernel.project_dir%/var/last-run.json'
 
+    # --- Email Threads ---
+
+    App\Domain\Port\EmailThreadFetcherInterface:
+        alias: App\Adapters\Gmail\GmailEmailThreadFetcher
+
+    App\Domain\Port\EmailThreadAnalyzerInterface:
+        alias: App\Adapters\AI\AiEmailThreadAnalyzer
+
+    App\Adapters\Gmail\GmailEmailThreadFetcher:
+        arguments:
+            $googleClient: '@google.client'
+
+    App\Adapters\AI\AiEmailThreadAnalyzer:
+        arguments:
+            $platform: '@ai.platform.openai'
+            $model: '%env(AI_MODEL)%'
+            # $requestDelayUs: 4_100_000   # uncomment for Gemini free tier (15 RPM)
+
     # --- Telegram ---
 
     App\Adapters\Telegram\TelegramNotificationSender:

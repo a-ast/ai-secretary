@@ -12,5 +12,6 @@ final readonly class Email
         public string $body,
         public string $sender,
         public \DateTimeImmutable $receivedAt,
+        public string $recipients = '',
     ) {}
 }

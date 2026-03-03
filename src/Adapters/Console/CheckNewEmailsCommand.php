@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'ai-sec:email:new',
-    description: 'Fetch unread Gmail emails, analyze importance via AI, and notify via Telegram.',
+    description: 'Fetch unread Gmail emails and notify via Telegram if they are important.',
 )]
 final class CheckNewEmailsCommand extends Command
 {

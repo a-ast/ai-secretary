@@ -10,6 +10,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **google/apiclient v2** — Gmail API (OAuth2)
 - Telegram Bot API — notifications via `symfony/http-client`
 
+## Workflow
+- After making changes: stage relevant files with `git add`, but never push.
+
 ## Architecture: Hexagonal
 
 ```
