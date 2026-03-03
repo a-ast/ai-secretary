@@ -1,0 +1,7 @@
+📩 *New Email*
+
+*Subject:* [{{ email.subject|telegram_escape }}]({{ gmail_url }})
+
+*From:* {{ email.sender|telegram_escape }}
+
+*Reason:* {{ analysis.reason|telegram_escape }}
