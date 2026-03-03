@@ -1,8 +1,10 @@
 # AI Secretary
 
-A Symfony 8 console application that fetches unread Gmail emails, analyzes them with AI to determine importance, and sends Telegram notifications for emails that require attention.
+A Symfony CLI application that fetches unread Gmail emails, 
+analyzes them with AI to determine importance, 
+and sends Telegram notifications for emails that require attention.
 
-## How It Works
+## How it works
 
 1. Fetches unread emails from Gmail inbox (last 2 months, up to `GMAIL_MAX_RESULTS`)
 2. Sends each email to an AI model with a classification prompt
@@ -18,7 +20,7 @@ A Symfony 8 console application that fetches unread Gmail emails, analyzes them 
 
 ## Setup
 
-### 1. Install dependencies
+### 1. Install
 
 ```bash
 composer install
@@ -84,32 +86,3 @@ Then install the corresponding bridge and set the API key:
 | Gemini    | `symfony/ai-gemini-platform`      | `ai.platform.gemini`     | `gemini-2.0-flash`   |
 | Anthropic | `symfony/ai-anthropic-platform`   | `ai.platform.anthropic`  | `claude-haiku-4-5-*` |
 | Ollama    | `symfony/ai-ollama-platform`      | `ai.platform.ollama`     | `llama3.2`           |
-
-## Architecture
-
-Hexagonal architecture with three layers:
-
-```
-src/
-  Domain/          Pure business logic — no framework dependencies
-    Email/         Email entity, EmailAnalysis value object
-    Port/          Interfaces: EmailFetcher, EmailAnalyzer, NotificationSender
-
-  Application/
-    DTO/           AnalyzeEmailsResult
-    UseCase/       AnalyzeEmailsUseCase — orchestrates fetch → analyze → notify
-
-  Adapters/
-    Console/       AnalyzeEmailsCommand, GmailAuthCommand
-    Gmail/         GmailEmailFetcher, GoogleClientFactory
-    AI/            AiEmailAnalyzer (provider-agnostic)
-    Telegram/      TelegramNotificationSender
-```
-
-Port-to-adapter bindings live in `config/services.yaml`. Swapping any adapter (e.g. Gmail → IMAP, OpenAI → Ollama) requires no changes to Domain or Application code.
-
-## Tests
-
-```bash
-php bin/phpunit
-```
