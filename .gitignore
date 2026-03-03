@@ -8,3 +8,19 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> sensitive credentials ###
+/config/gmail_credentials.json
+/config/gmail_token.json
+###< sensitive credentials ###
+
+###> local tooling ###
+/.idea/
+/.DS_Store
+/.claude/
+###< local tooling ###

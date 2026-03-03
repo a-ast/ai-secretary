@@ -21,3 +21,47 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # --- Hexagonal Architecture: port → adapter bindings ---
+
+    App\Domain\Port\EmailFetcherInterface:
+        alias: App\Adapters\Gmail\GmailEmailFetcher
+
+    App\Domain\Port\EmailAnalyzerInterface:
+        alias: App\Adapters\AI\AiEmailAnalyzer
+
+    App\Domain\Port\NotificationSenderInterface:
+        alias: App\Adapters\Telegram\TelegramNotificationSender
+
+    # --- Gmail ---
+
+    App\Adapters\Gmail\GoogleClientFactory:
+        arguments:
+            $credentialsPath: '%kernel.project_dir%/config/gmail_credentials.json'
+            $tokenPath: '%kernel.project_dir%/var/gmail_token.json'
+
+    google.client:
+        class: Google\Client
+        factory: ['@App\Adapters\Gmail\GoogleClientFactory', 'create']
+
+    App\Adapters\Gmail\GmailEmailFetcher:
+        arguments:
+            $googleClient: '@google.client'
+            $maxResults: '%env(int:GMAIL_MAX_RESULTS)%'
+
+    # --- AI ---
+    # To switch provider: change $platform to '@ai.platform.gemini', '@ai.platform.anthropic', etc.
+    # and update AI_MODEL in .env.local accordingly.
+
+    App\Adapters\AI\AiEmailAnalyzer:
+        arguments:
+            $platform: '@ai.platform.openai'
+            $model: '%env(AI_MODEL)%'
+            # $requestDelayUs: 4_100_000   # uncomment for Gemini free tier (15 RPM)
+
+    # --- Telegram ---
+
+    App\Adapters\Telegram\TelegramNotificationSender:
+        arguments:
+            $botToken: '%env(TELEGRAM_BOT_TOKEN)%'
+            $chatId: '%env(TELEGRAM_CHAT_ID)%'
