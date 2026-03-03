@@ -59,6 +59,15 @@ services:
             $model: '%env(AI_MODEL)%'
             # $requestDelayUs: 4_100_000   # uncomment for Gemini free tier (15 RPM)
 
+    # --- Last Run ---
+
+    App\Domain\Port\LastRunRepositoryInterface:
+        alias: App\Adapters\Storage\JsonFileLastRunRepository
+
+    App\Adapters\Storage\JsonFileLastRunRepository:
+        arguments:
+            $filePath: '%kernel.project_dir%/var/last-run.json'
+
     # --- Telegram ---
 
     App\Adapters\Telegram\TelegramNotificationSender:

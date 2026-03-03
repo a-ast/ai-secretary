@@ -11,5 +11,5 @@ interface EmailFetcherInterface
     /**
      * @return Email[]
      */
-    public function fetchUnread(): array;
+    public function fetchUnread(\DateTimeImmutable $since): array;
 }

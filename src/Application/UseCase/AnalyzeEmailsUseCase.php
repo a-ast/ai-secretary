@@ -7,6 +7,7 @@ namespace App\Application\UseCase;
 use App\Application\DTO\AnalyzeEmailsResult;
 use App\Domain\Port\EmailAnalyzerInterface;
 use App\Domain\Port\EmailFetcherInterface;
+use App\Domain\Port\LastRunRepositoryInterface;
 use App\Domain\Port\NotificationSenderInterface;
 
 final class AnalyzeEmailsUseCase
@@ -15,17 +16,22 @@ final class AnalyzeEmailsUseCase
         private readonly EmailFetcherInterface $emailFetcher,
         private readonly EmailAnalyzerInterface $emailAnalyzer,
         private readonly NotificationSenderInterface $notificationSender,
+        private readonly LastRunRepositoryInterface $lastRunRepository,
     ) {}
 
     public function execute(): AnalyzeEmailsResult
     {
         $result = new AnalyzeEmailsResult();
 
+        $since = $this->lastRunRepository->getLastRun() ?? new \DateTimeImmutable('-1 month');
+
         try {
-            $emails = $this->emailFetcher->fetchUnread();
+            $emails = $this->emailFetcher->fetchUnread($since);
         } catch (\Throwable $e) {
             throw new \RuntimeException('Failed to fetch emails from Gmail: '.$e->getMessage(), 0, $e);
         }
+
+        $this->lastRunRepository->saveLastRun(new \DateTimeImmutable());
 
         $result->total = count($emails);
 

@@ -17,11 +17,11 @@ final class GmailEmailFetcher implements EmailFetcherInterface
         private readonly int $maxResults = 10,
     ) {}
 
-    public function fetchUnread(): array
+    public function fetchUnread(\DateTimeImmutable $since): array
     {
         $service = new Gmail($this->googleClient);
 
-        $after = (new \DateTimeImmutable('-2 months'))->format('Y/m/d');
+        $after = $since->format('Y/m/d');
 
         $listResponse = $service->users_messages->listUsersMessages('me', [
             'q' => "is:unread in:inbox after:$after",
