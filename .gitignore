@@ -17,6 +17,7 @@
 ###> sensitive credentials ###
 /config/gmail_credentials.json
 /config/gmail_token.json
+/.env.dev.local
 ###< sensitive credentials ###
 
 ###> local tooling ###
