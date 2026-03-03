@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
 #[AsCommand(
-    name: 'app:gmail-auth',
+    name: 'ai-sec:email:gmail-auth',
     description: 'Perform one-time Gmail OAuth2 authorization and save the token.',
 )]
 final class GmailAuthCommand extends Command

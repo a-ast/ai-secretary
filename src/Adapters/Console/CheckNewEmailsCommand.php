@@ -11,10 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'app:analyze-emails',
+    name: 'ai-sec:email:new',
     description: 'Fetch unread Gmail emails, analyze importance via AI, and notify via Telegram.',
 )]
-final class AnalyzeEmailsCommand extends Command
+final class CheckNewEmailsCommand extends Command
 {
     public function __construct(private readonly AnalyzeEmailsUseCase $useCase)
     {
