@@ -29,10 +29,13 @@ final class TelegramNotificationSender implements NotificationSenderInterface
             throw new \RuntimeException('TELEGRAM_CHAT_ID is not configured.');
         }
 
+        $gmailUrl = sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $email->id);
+
         $text = sprintf(
-            "📧 *Important Email*\n\n*From:* %s\n*Subject:* %s\n\n*Why:* %s",
+            "📧 *Important Email*\n\n*From:* %s\n*Subject:* [%s](%s)\n\n*Why:* %s",
             $this->escape($email->sender),
             $this->escape($email->subject),
+            $gmailUrl,
             $this->escape($analysis->reason),
         );
 
