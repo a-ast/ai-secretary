@@ -10,17 +10,16 @@ use App\Domain\Port\NotificationSenderInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Twig\Environment;
 
 final class TelegramNotificationSender implements NotificationSenderInterface
 {
     public function __construct(
         private readonly HttpClientInterface $httpClient,
+        private readonly Environment $twig,
         private readonly string $botToken,
         private readonly string $chatId,
-    ) {}
-
-    public function send(Email $email, EmailAnalysis $analysis): void
-    {
+    ) {
         if ('' === $this->botToken) {
             throw new \RuntimeException('TELEGRAM_BOT_TOKEN is not configured.');
         }
@@ -28,16 +27,15 @@ final class TelegramNotificationSender implements NotificationSenderInterface
         if ('' === $this->chatId) {
             throw new \RuntimeException('TELEGRAM_CHAT_ID is not configured.');
         }
+    }
 
-        $gmailUrl = sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $email->id);
-
-        $text = sprintf(
-            "📧 *Important Email*\n\n*From:* %s\n*Subject:* [%s](%s)\n\n*Reason:* %s",
-            $this->escape($email->sender),
-            $this->escape($email->subject),
-            $gmailUrl,
-            $this->escape($analysis->reason),
-        );
+    public function send(Email $email, EmailAnalysis $analysis): void
+    {
+        $text = $this->twig->render('telegram/new-email.md.twig', [
+            'email' => $email,
+            'analysis' => $analysis,
+            'gmail_url' => sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $email->id),
+        ]);
 
         try {
             $response = $this->httpClient->request('POST', sprintf(
@@ -46,7 +44,7 @@ final class TelegramNotificationSender implements NotificationSenderInterface
             ), [
                 'json' => [
                     'chat_id' => $this->chatId,
-                    'text' => $text,
+                    'text' => trim($text),
                     'parse_mode' => 'MarkdownV2',
                 ],
             ]);
@@ -68,10 +66,5 @@ final class TelegramNotificationSender implements NotificationSenderInterface
                 $e->getResponse()->getStatusCode(),
             ), 0, $e);
         }
-    }
-
-    private function escape(string $text): string
-    {
-        return preg_replace('/([_*\[\]()~`>#+\-=|{}.!])/', '\\\\$1', $text);
     }
 }
