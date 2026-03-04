@@ -12,12 +12,20 @@ final class TelegramExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('telegram_escape', $this->escape(...), ['is_safe' => ['html']]),
+            new TwigFilter(
+                name: 'telegram_escape',
+                callable: $this->escape(...),
+                options: ['is_safe' => ['html']]
+            ),
         ];
     }
 
     private function escape(string $text): string
     {
-        return preg_replace('/([_*\[\]()~`>#+\-=|{}.!])/', '\\\\$1', $text);
+        return preg_replace(
+            pattern: '/([_*\[\]()~`>#+\-=|{}.!])/',
+            replacement: '\\\\$1',
+            subject: $text
+        );
     }
 }

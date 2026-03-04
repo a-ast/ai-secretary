@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Tests\Adapters\AI\Tool;
 
 use App\Adapters\AI\Tool\FetchEmailThreadsTool;

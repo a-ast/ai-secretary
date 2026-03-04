@@ -11,11 +11,11 @@ use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Twig\Environment;
 
-final class TelegramNotificationSender implements NotificationSenderInterface
+final readonly class TelegramNotificationSender implements NotificationSenderInterface
 {
     public function __construct(
-        private readonly ChatterInterface $chatter,
-        private readonly Environment $twig,
+        private ChatterInterface $chatter,
+        private Environment      $twig,
     ) {
     }
 
@@ -25,8 +25,9 @@ final class TelegramNotificationSender implements NotificationSenderInterface
 
         $message = new ChatMessage(trim($text));
         $message
-            ->options((new TelegramOptions())
-            ->parseMode('MarkdownV2'));
+            ->options(
+                new TelegramOptions()->parseMode('MarkdownV2')
+            );
 
         $this->chatter->send($message);
     }

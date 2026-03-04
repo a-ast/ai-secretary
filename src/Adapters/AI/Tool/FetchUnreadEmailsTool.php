@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Adapters\AI\Tool;
 
+use App\Domain\Email\Email;
 use App\Domain\Port\LastRunRepositoryInterface;
 use App\Domain\Port\MailboxInterface;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
@@ -10,11 +11,11 @@ use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
     name: 'fetch_unread_emails',
     description: 'Fetches unread emails from inbox since the last run. Returns JSON array of emails with id, subject, sender, body (max 2000 chars), and gmail_link.',
 )]
-final class FetchUnreadEmailsTool
+final readonly class FetchUnreadEmailsTool
 {
     public function __construct(
-        private readonly MailboxInterface $mailbox,
-        private readonly LastRunRepositoryInterface $lastRun,
+        private MailboxInterface           $mailbox,
+        private LastRunRepositoryInterface $lastRun,
     ) {}
 
     public function __invoke(): string
@@ -23,12 +24,12 @@ final class FetchUnreadEmailsTool
         $emails = $this->mailbox->fetchUnread($since);
         $this->lastRun->saveLastRun(new \DateTimeImmutable());
 
-        return json_encode(array_map(fn ($e) => [
-            'id'         => $e->id,
-            'subject'    => $e->subject,
-            'sender'     => $e->sender,
-            'body'       => mb_substr($e->body, 0, 2000),
-            'gmail_link' => sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $e->id),
+        return json_encode(array_map(fn (Email $email) => [
+            'id'         => $email->id,
+            'subject'    => $email->subject,
+            'sender'     => $email->sender,
+            'body'       => mb_substr($email->body, 0, 2000),
+            'gmail_link' => sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $email->id),
         ], $emails), \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
     }
 }

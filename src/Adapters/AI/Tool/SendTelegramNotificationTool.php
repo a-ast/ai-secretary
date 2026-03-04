@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Adapters\AI\Tool;
 
 use App\Domain\Agent\ActionItem;
@@ -10,9 +11,9 @@ use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
     name: 'send_telegram_notification',
     description: 'Sends a Telegram notification for an important email or thread that requires attention.',
 )]
-final class SendTelegramNotificationTool
+final readonly class SendTelegramNotificationTool
 {
-    public function __construct(private readonly NotificationSenderInterface $notifier) {}
+    public function __construct(private NotificationSenderInterface $notifier) {}
 
     /**
      * @param string $title   Email subject or thread title (include [AWAITING REPLY] or [NEEDS YOUR REPLY] prefix for threads)

@@ -16,6 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Code style
 1. Always simplify FQN, e.g. use RuntimeException with the corresponding use instead of \RuntimeException.
 2. Use SymfonyStyle in commands for input and output.
+3. Use named parameters in method calls if there are more than 2 parameters.
 
 ## Architecture: Hexagonal
 
