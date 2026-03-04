@@ -24,7 +24,9 @@ final class TelegramNotificationSender implements NotificationSenderInterface
         $text = $this->twig->render('telegram/action-item.md.twig', ['item' => $item]);
 
         $message = new ChatMessage(trim($text));
-        $message->options((new TelegramOptions())->parseMode('MarkdownV2'));
+        $message
+            ->options((new TelegramOptions())
+            ->parseMode('MarkdownV2'));
 
         $this->chatter->send($message);
     }
