@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Adapters\Console;
 
+use App\Domain\Port\LastRunRepositoryInterface;
 use Symfony\AI\Agent\AgentInterface;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
@@ -20,6 +21,7 @@ final class NewEmailsCommand extends Command
     public function __construct(
         #[Autowire(service: 'ai.agent.new_email')]
         private readonly AgentInterface $agent,
+        private readonly LastRunRepositoryInterface $lastRun,
     ) {
         parent::__construct();
     }
@@ -31,6 +33,7 @@ final class NewEmailsCommand extends Command
                 Message::ofUser('Process my unread emails: fetch them, classify importance, notify me of the important ones, and summarize.'),
             ));
             $output->writeln($result->getContent());
+            $this->lastRun->saveLastRun(new \DateTimeImmutable());
         } catch (\Throwable $e) {
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
             return Command::FAILURE;

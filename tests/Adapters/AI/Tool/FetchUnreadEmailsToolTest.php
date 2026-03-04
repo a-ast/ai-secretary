@@ -12,9 +12,8 @@ final class FetchUnreadEmailsToolTest extends TestCase
 {
     public function testReturnsJsonArrayOfEmails(): void
     {
-        $lastRun = $this->createMock(LastRunRepositoryInterface::class);
+        $lastRun = $this->createStub(LastRunRepositoryInterface::class);
         $lastRun->method('getLastRun')->willReturn(new \DateTimeImmutable('-1 day'));
-        $lastRun->expects(self::once())->method('saveLastRun');
 
         $mailbox = $this->createMock(MailboxInterface::class);
         $email = new Email('msg1', 'Hello', 'Body content', 'sender@example.com', new \DateTimeImmutable());
@@ -47,9 +46,8 @@ final class FetchUnreadEmailsToolTest extends TestCase
 
     public function testTruncatesBodyTo2000Chars(): void
     {
-        $lastRun = $this->createMock(LastRunRepositoryInterface::class);
+        $lastRun = $this->createStub(LastRunRepositoryInterface::class);
         $lastRun->method('getLastRun')->willReturn(new \DateTimeImmutable('-1 day'));
-        $lastRun->expects(self::once())->method('saveLastRun');
 
         $longBody = str_repeat('x', 3000);
         $email = new Email('msg1', 'Subject', $longBody, 'sender@example.com', new \DateTimeImmutable());
