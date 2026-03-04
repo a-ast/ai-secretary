@@ -18,6 +18,7 @@ ai:
             tools:
                 - 'App\Adapters\AI\Tool\FetchUnreadEmailsTool'
                 - 'App\Adapters\AI\Tool\SendTelegramNotificationTool'
+            fault_tolerant_toolbox: false
 
         thread_review:
             platform: 'ai.platform.openai'
@@ -28,6 +29,7 @@ ai:
                 - 'App\Adapters\AI\Tool\GetUserEmailTool'
                 - 'App\Adapters\AI\Tool\FetchEmailThreadsTool'
                 - 'App\Adapters\AI\Tool\SendTelegramNotificationTool'
+            fault_tolerant_toolbox: false
 
     store:
         # Store configuration
