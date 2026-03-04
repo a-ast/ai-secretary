@@ -46,13 +46,12 @@ Create `.env.local`:
 OPENAI_API_KEY=sk-...
 AI_MODEL=gpt-4o-mini
 
-TELEGRAM_BOT_TOKEN=...
-TELEGRAM_CHAT_ID=...        # your own user ID, not the bot's
+TELEGRAM_DSN=telegram://BOT_TOKEN@default?channel=CHAT_ID
 
 GMAIL_MAX_RESULTS=10
 ```
 
-**Telegram setup:** create a bot via [@BotFather](https://t.me/BotFather), send `/start` to your bot, then find your chat ID at `https://api.telegram.org/bot<TOKEN>/getUpdates`.
+**Telegram setup:** create a bot via [@BotFather](https://t.me/BotFather), send `/start` to your bot, then find your chat ID at `https://api.telegram.org/bot<TOKEN>/getUpdates`. Use your own user ID as `channel`, not the bot's.
 
 ## Usage
 
