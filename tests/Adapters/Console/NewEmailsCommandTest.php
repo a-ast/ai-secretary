@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Tests\Adapters\Console;
 
 use App\Adapters\Console\NewEmailsCommand;
+use App\Domain\Port\LastRunRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\AI\Agent\MockAgent;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -15,7 +16,10 @@ final class NewEmailsCommandTest extends TestCase
             'Process my unread emails: fetch them, classify importance, notify me of the important ones, and summarize.' => 'Reviewed 5 emails, 2 were important and notifications sent.',
         ]);
 
-        $command = new NewEmailsCommand($agent);
+        $lastRun = $this->createMock(LastRunRepositoryInterface::class);
+        $lastRun->expects(self::once())->method('saveLastRun');
+
+        $command = new NewEmailsCommand($agent, $lastRun);
         $tester = new CommandTester($command);
         $tester->execute([]);
 
@@ -28,7 +32,10 @@ final class NewEmailsCommandTest extends TestCase
     {
         $agent = new MockAgent(); // no responses configured → will throw
 
-        $command = new NewEmailsCommand($agent);
+        $lastRun = $this->createMock(LastRunRepositoryInterface::class);
+        $lastRun->expects(self::never())->method('saveLastRun');
+
+        $command = new NewEmailsCommand($agent, $lastRun);
         $tester = new CommandTester($command);
         $tester->execute([]);
 
