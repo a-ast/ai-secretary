@@ -12,7 +12,7 @@ final class TelegramExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('telegram_escape', $this->escape(...), ['is_safe' => ['all']]),
+            new TwigFilter('telegram_escape', $this->escape(...), ['is_safe' => ['html']]),
         ];
     }
 

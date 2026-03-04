@@ -13,6 +13,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Workflow
 - After making changes: stage relevant files with `git add`, but never push.
 
+## Code style
+1. Always simplify FQN, e.g. use RuntimeException with the corresponding use instead of \RuntimeException.
+2. Use SymfonyStyle in commands for input and output.
+
 ## Architecture: Hexagonal
 
 ```
