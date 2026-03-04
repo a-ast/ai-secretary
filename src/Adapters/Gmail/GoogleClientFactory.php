@@ -7,11 +7,11 @@ namespace App\Adapters\Gmail;
 use Google\Client;
 use Google\Service\Gmail;
 
-final class GoogleClientFactory
+final readonly class GoogleClientFactory
 {
     public function __construct(
-        private readonly string $credentialsPath,
-        private readonly string $tokenPath,
+        private string $credentialsPath,
+        private string $tokenPath,
     ) {}
 
     public function create(): Client
@@ -60,7 +60,7 @@ final class GoogleClientFactory
 
     public function saveToken(array $token): void
     {
-        $dir = \dirname($this->tokenPath);
+        $dir = dirname($this->tokenPath);
         if (!is_dir($dir)) {
             mkdir($dir, 0700, true);
         }

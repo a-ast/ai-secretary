@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Port;
 
-use App\Domain\Email\Email;
-use App\Domain\Email\EmailAnalysis;
+use App\Domain\Agent\ActionItem;
 
 interface NotificationSenderInterface
 {
-    public function send(Email $email, EmailAnalysis $analysis): void;
+    public function send(ActionItem $item): void;
 }
