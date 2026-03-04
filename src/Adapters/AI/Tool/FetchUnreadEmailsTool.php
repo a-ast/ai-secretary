@@ -22,14 +22,17 @@ final readonly class FetchUnreadEmailsTool
     {
         $since = $this->lastRun->getLastRun() ?? new \DateTimeImmutable('-1 month');
         $emails = $this->mailbox->fetchUnread($since);
-        $this->lastRun->saveLastRun(new \DateTimeImmutable());
 
-        return json_encode(array_map(fn (Email $email) => [
+        $result = json_encode(array_map(fn (Email $email) => [
             'id'         => $email->id,
             'subject'    => $email->subject,
             'sender'     => $email->sender,
             'body'       => mb_substr($email->body, 0, 2000),
             'gmail_link' => sprintf('https://mail.google.com/mail/u/0/#inbox/%s', $email->id),
         ], $emails), \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
+
+        $this->lastRun->saveLastRun(new \DateTimeImmutable());
+
+        return $result;
     }
 }
