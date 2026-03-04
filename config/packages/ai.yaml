@@ -14,7 +14,7 @@ ai:
             platform: 'ai.platform.openai'
             model: '%env(AI_MODEL)%'
             prompt:
-                file: '%kernel.project_dir%/config/prompts/new_email_agent.txt'
+                file: '%kernel.project_dir%/prompts/new_email_agent.txt'
             tools:
                 - 'App\Adapters\AI\Tool\FetchUnreadEmailsTool'
                 - 'App\Adapters\AI\Tool\SendTelegramNotificationTool'
@@ -24,7 +24,7 @@ ai:
             platform: 'ai.platform.openai'
             model: '%env(AI_MODEL)%'
             prompt:
-                file: '%kernel.project_dir%/config/prompts/thread_review_agent.txt'
+                file: '%kernel.project_dir%/prompts/thread_review_agent.txt'
             tools:
                 - 'App\Adapters\AI\Tool\GetUserEmailTool'
                 - 'App\Adapters\AI\Tool\FetchEmailThreadsTool'
