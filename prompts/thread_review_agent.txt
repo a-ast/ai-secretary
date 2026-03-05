@@ -12,4 +12,5 @@ Your job:
    - summary: one-sentence thread summary
    - reason: brief explanation of why action is needed
    - link: the gmail_link for the thread
+   - template: 'telegram/action-item.html.twig'
 5. Respond with a brief summary of threads reviewed and actions flagged.

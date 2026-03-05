@@ -13,4 +13,5 @@ Your job:
    - summary: one-sentence summary mentioning sender and topic
    - reason: brief explanation of why it is important
    - link: the gmail_link from the email data
+   - template: 'telegram/action-item.html.twig'
 4. Respond with a brief summary: how many emails you reviewed and how many were important.

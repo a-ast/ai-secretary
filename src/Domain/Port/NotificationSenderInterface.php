@@ -8,5 +8,5 @@ use App\Domain\Agent\ActionItem;
 
 interface NotificationSenderInterface
 {
-    public function send(ActionItem $item): void;
+    public function send(ActionItem $item, string $template = 'telegram/action-item.html.twig'): void;
 }

@@ -18,9 +18,9 @@ final readonly class TelegramNotificationSender implements NotificationSenderInt
         private Environment $twig,
     ) {}
 
-    public function send(ActionItem $item): void
+    public function send(ActionItem $item, string $template = 'telegram/action-item.html.twig'): void
     {
-        $text = $this->twig->render('telegram/action-item.html.twig', ['item' => $item]);
+        $text = $this->twig->render($template, ['item' => $item]);
 
         $message = new ChatMessage(trim($text));
         $message->options(new TelegramOptions()->parseMode('HTML'));
