@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Adapters\Gmail;
 
 use Google\Client;
+use Google\Service\Calendar;
 use Google\Service\Gmail;
 
 final readonly class GoogleClientFactory
@@ -52,6 +53,7 @@ final readonly class GoogleClientFactory
         $client = new Client();
         $client->setAuthConfig($this->credentialsPath);
         $client->addScope(Gmail::GMAIL_READONLY);
+        $client->addScope(Calendar::CALENDAR_READONLY);
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
 

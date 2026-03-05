@@ -31,6 +31,16 @@ ai:
                 - 'App\Adapters\AI\Tool\SendTelegramNotificationTool'
             fault_tolerant_toolbox: false
 
+        calendar:
+            platform: 'ai.platform.openai'
+            model: '%env(AI_MODEL)%'
+            prompt:
+                file: '%kernel.project_dir%/prompts/calendar_agent.txt'
+            tools:
+                - 'App\Adapters\AI\Tool\FetchCalendarEventsTool'
+                - 'App\Adapters\AI\Tool\SendTelegramNotificationTool'
+            fault_tolerant_toolbox: false
+
     store:
         # Store configuration
 

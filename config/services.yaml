@@ -18,6 +18,9 @@ services:
     App\Domain\Port\NotificationSenderInterface:
         alias: App\Adapters\Telegram\TelegramNotificationSender
 
+    App\Domain\Port\CalendarInterface:
+        alias: App\Adapters\GoogleCalendar\GoogleCalendarFetcher
+
     # --- Gmail ---
 
     App\Adapters\Gmail\GoogleClientFactory:
