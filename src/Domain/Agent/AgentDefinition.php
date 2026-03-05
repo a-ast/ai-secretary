@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Agent;
 
-use App\Adapters\Persistence\AgentRunRepository;
+use App\Adapters\Persistence\AgentDefinitionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-#[ORM\Entity(repositoryClass: AgentRunRepository::class)]
+#[ORM\Entity(repositoryClass: AgentDefinitionRepository::class)]
 #[ORM\Table(name: 'agent')]
-class AgentRun
+class AgentDefinition
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
