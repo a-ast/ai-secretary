@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Entity;
+declare(strict_types=1);
 
-use App\Repository\AgentRunRepository;
+namespace App\Domain\Agent;
+
+use App\Adapters\Persistence\AgentRunRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity(repositoryClass: AgentRunRepository::class)]
+#[ORM\Table(name: 'agent')]
 class AgentRun
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?UuidInterface $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -29,7 +33,12 @@ class AgentRun
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->id = Uuid::uuid7();
+    }
+
+    public function getId(): ?UuidInterface
     {
         return $this->id;
     }
