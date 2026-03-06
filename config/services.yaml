@@ -34,8 +34,9 @@ services:
             $googleClient: '@google.client'
             $maxResults: '%env(int:GMAIL_MAX_RESULTS)%'
 
-    App\Domain\Port\AgentRunRepositoryInterface:
-        alias: App\Adapters\Persistence\AgentRunRepository
+    App\Application\AgentFactory:
+        arguments:
+            $model: '%env(AI_MODEL)%'
 
     App\Domain\Port\LastRunRepositoryInterface:
         alias: App\Adapters\Storage\JsonFileLastRunRepository
