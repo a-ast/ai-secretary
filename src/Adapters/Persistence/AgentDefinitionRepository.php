@@ -8,7 +8,7 @@ use App\Domain\Agent\AgentDefinition;
 use App\Domain\Port\AgentRunRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<AgentDefinition>
@@ -20,7 +20,7 @@ class AgentDefinitionRepository extends ServiceEntityRepository implements Agent
         parent::__construct($registry, AgentDefinition::class);
     }
 
-    public function findById(UuidInterface $id): ?AgentDefinition
+    public function findById(Uuid $id): ?AgentDefinition
     {
         return $this->find($id);
     }

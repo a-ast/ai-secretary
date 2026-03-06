@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Port;
 
 use App\Domain\Agent\AgentDefinition;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 interface AgentRunRepositoryInterface
 {
-    public function findById(UuidInterface $id): ?AgentDefinition;
+    public function findById(Uuid $id): ?AgentDefinition;
 
     /** @return AgentDefinition[] */
     public function findAll(): array;

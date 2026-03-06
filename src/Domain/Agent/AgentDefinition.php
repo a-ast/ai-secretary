@@ -13,8 +13,7 @@ use App\Adapters\Persistence\AgentDefinitionRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(),
         new Get(),
         new Post(),
-        new Patch(),
+        new Patch(inputFormats: ['json' => ['application/merge-patch+json', 'application/json'], 'yaml' => ['application/yaml', 'text/yaml']]),
     ],
     normalizationContext: ['groups' => ['agent:read']],
     denormalizationContext: ['groups' => ['agent:write']],
@@ -37,7 +36,7 @@ class AgentDefinition
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[Groups(['agent:read'])]
-    private ?UuidInterface $id = null;
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['agent:read', 'agent:write'])]
@@ -63,7 +62,7 @@ class AgentDefinition
 
     public function __construct()
     {
-        $this->id = Uuid::uuid7();
+        $this->id = Uuid::v7();
     }
 
     #[ORM\PrePersist]
@@ -72,7 +71,7 @@ class AgentDefinition
         $this->created_at ??= new DateTimeImmutable();
     }
 
-    public function getId(): ?UuidInterface
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
