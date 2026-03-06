@@ -34,6 +34,19 @@ services:
             $googleClient: '@google.client'
             $maxResults: '%env(int:GMAIL_MAX_RESULTS)%'
 
+    # --- Serializer ---
+
+    serializer.encoder.yaml:
+        class: Symfony\Component\Serializer\Encoder\YamlEncoder
+        arguments:
+            - ~
+            - ~
+            - yaml_inline: 20
+              yaml_indent: 2
+              yaml_flags: !php/const Symfony\Component\Yaml\Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
+
+    # --- AI ---
+
     App\Application\AgentFactory:
         arguments:
             $model: '%env(AI_MODEL)%'
