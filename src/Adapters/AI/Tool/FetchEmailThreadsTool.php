@@ -10,7 +10,7 @@ use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool(
     name: 'fetch_email_threads',
-    description: 'Fetches email threads from the past N days. Returns JSON array of threads, each with id, subject, gmail_link, and messages (sender, recipients, date, body truncated to 500 chars).',
+    description: 'Fetches email threads from the past N days. Returns JSON array of threads, each with id, subject, gmail_link, and messages (sender, recipients, date, body).',
 )]
 final readonly class FetchEmailThreadsTool
 {

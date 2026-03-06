@@ -7,10 +7,14 @@
         "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "api-platform/doctrine-orm": "*",
+        "api-platform/symfony": "*",
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
         "google/apiclient": "^2.0",
+        "ramsey/uuid": "^4.9",
+        "ramsey/uuid-doctrine": "^2.1",
         "symfony/ai-agent": "^0.5.0",
         "symfony/ai-bundle": "^0.5.0",
         "symfony/ai-gemini-platform": "^0.5.0",
@@ -21,6 +25,7 @@
         "symfony/framework-bundle": "8.0.*",
         "symfony/notifier": "8.0.*",
         "symfony/runtime": "8.0.*",
+        "symfony/security-bundle": "8.0.*",
         "symfony/telegram-notifier": "8.0.*",
         "symfony/twig-bundle": "8.0.*",
         "symfony/yaml": "8.0.*"
@@ -78,6 +83,8 @@
         }
     },
     "require-dev": {
+        "dg/bypass-finals": "^1.9",
+        "phpspec/prophecy-phpunit": "^2.5",
         "phpunit/phpunit": "^13.0",
         "symfony/maker-bundle": "^1.66",
         "symfony/phpunit-bridge": "^8.0"
